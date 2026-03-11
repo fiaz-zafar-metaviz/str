@@ -6,8 +6,8 @@ import { ThemeProvider } from '../context/ThemeContext'
 const geist = Geist({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Top10STR',
-  description: 'Short Term Rental Platform',
+  title: 'STR Wedding',
+  description: 'Short Term Rental Wedding Platform',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
