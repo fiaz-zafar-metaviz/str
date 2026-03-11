@@ -120,7 +120,7 @@ export default function SearchBar() {
 
   const btnLabel = `Search Now${count !== null ? ` (${count})` : ''}`
 
-  return (
+  return ( 
     <div ref={formRef} className="w-full">
       {!ready ? <SearchBarSkeleton /> : (
         <form onSubmit={handleSubmit} className={`max-w-5xl mx-auto transition-all ${stickyClass}`} style={!sticky ? { background: 'rgba(0,0,0,0.2)', borderRadius: 10, padding: '20px 16px' } : {}}>
