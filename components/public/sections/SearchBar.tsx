@@ -5,16 +5,16 @@ import { useRouter } from 'next/navigation'
 import Counter   from '@/components/public/ui/Counter'
 import Amenities from '@/components/public/searchBar/Amenities'
 import Location  from '@/components/public/searchBar/Location'
-import Button    from '@/components/public/ui/Button'
-import { SkeletonGroup } from '@/components/public/ui/Skeleton'
-
+import Button from '@/components/public/ui/Button'
 // ── Skeleton ──────────────────────────────────────────────────
 
+// Single block matching the real search bar height so layout never shifts
 function SearchBarSkeleton() {
   return (
-    <div className="grid grid-cols-4 gap-1.5">
-      <SkeletonGroup count={4} className="h-11" />
-    </div>
+    <div
+      className="skeleton w-full rounded-[10px]"
+      style={{ height: 168, padding: '20px 16px', background: 'rgba(255,255,255,0.08)' }}
+    />
   )
 }
 
@@ -82,33 +82,37 @@ export default function SearchBar() {
   return (
     <div ref={formRef} className="w-full">
       {!ready ? <SearchBarSkeleton /> : (
-        <form onSubmit={handleSubmit} className={`max-w-5xl mx-auto transition-all ${stickyClass}`} style={!sticky ? { background: 'rgba(0,0,0,0.2)', borderRadius: 10, padding: '30px 28px' } : {}}>
+        <form onSubmit={handleSubmit} className={`max-w-5xl mx-auto transition-all ${stickyClass}`} style={!sticky ? { background: 'rgba(0,0,0,0.2)', borderRadius: 10, padding: '20px 16px' } : {}}>
 
-          <h2 className="text-white text-center mb-4 leading-snug drop-shadow" style={{ fontSize: 25, fontWeight: 600 }}>
+          {/* Subtitle — hidden on mobile to save space */}
+          <h2 className="hidden md:block text-white text-center mb-3 leading-snug drop-shadow text-[25px]" style={{ fontWeight: 600 }}>
             Search Short Term Rental Wedding Venues<br />
-            <span style={{ fontWeight: 600 }}>Changing The Game On How You Choose Your Wedding Venue!</span>
+            Changing The Game On How You Choose Your Wedding Venue!
+          </h2>
+          <h2 className="md:hidden text-white text-center mb-2 text-[13px] leading-snug drop-shadow" style={{ fontWeight: 600 }}>
+            Search STR Wedding Venues
           </h2>
 
-          {count !== null && (
-            <div className="flex justify-end mb-1 md:hidden">
-              <span className="text-xs text-muted">{count} Results</span>
-            </div>
-          )}
-
-          <div className="grid grid-cols-2 md:grid-cols-[1fr_1fr_1fr_1fr_auto] gap-1.5" style={{ height: 46 }}>
+          {/* Desktop: single row with Search Now button */}
+          <div className="hidden md:grid md:grid-cols-[1fr_1fr_1fr_1fr_auto] gap-1.5" style={{ height: 46 }}>
             <Counter   label="Attendees" name="attendees" value={attendees} onChange={setAttendees} />
             <Counter   label="Sleeps"    name="sleeps"    value={sleeps}    onChange={setSleeps} />
             <Amenities selected={amenities} onChange={setAmenities} />
             <Location  selected={locations} onChange={setLocations} />
-
-            <Button type="submit" className="hidden md:flex items-center gap-2 h-full px-6 whitespace-nowrap bg-black text-white border border-white hover:bg-zinc-900">
-
+            <button type="submit" className="h-full flex items-center gap-2 px-6 whitespace-nowrap rounded-lg font-semibold text-sm bg-black text-white border border-white hover:bg-zinc-900 cursor-pointer transition-colors">
               {btnLabel}
-            </Button>
+            </button>
           </div>
 
-          <Button type="submit" className="mt-2 w-full flex md:hidden items-center justify-center gap-2 py-3 bg-black text-white border border-white hover:bg-zinc-900">
-            {btnLabel}
+          {/* Mobile: 2×2 grid + full-width search button */}
+          <div className="md:hidden grid grid-cols-2 gap-1.5">
+            <Counter   label="Attendees" name="attendees" value={attendees} onChange={setAttendees} />
+            <Counter   label="Sleeps"    name="sleeps"    value={sleeps}    onChange={setSleeps} />
+            <Amenities selected={amenities} onChange={setAmenities} />
+            <Location  selected={locations} onChange={setLocations} />
+          </div>
+          <Button type="submit" className="mt-1.5 w-full flex md:hidden items-center justify-center gap-2 py-3 bg-black text-white border border-white hover:bg-zinc-900">
+            {btnLabel}{count !== null ? ` (${count})` : ''}
           </Button>
 
         </form>

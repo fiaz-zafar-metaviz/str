@@ -96,7 +96,7 @@ textarea::placeholder {
 
 /* Base skeleton block — add height/width via Tailwind */
 .skeleton {
-  background: #2A3038;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 6px;
   position: relative;
   overflow: hidden;
@@ -108,7 +108,7 @@ textarea::placeholder {
   inset: 0;
   transform: translateX(-100%);
   animation: shimmer 1.5s infinite;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
 }
 
 /* Rounded pill variant */
