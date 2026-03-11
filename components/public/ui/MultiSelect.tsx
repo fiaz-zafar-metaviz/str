@@ -76,7 +76,7 @@ export default function MultiSelect({ name, placeholder, options, selected, onCh
       </button>
 
       {open && (
-        <div className="dropdown-panel absolute top-full left-0 right-0 mt-1 rounded-xl shadow-2xl z-50 overflow-hidden flex flex-col" style={{ maxHeight: 280 }}>
+        <div className="dropdown-panel absolute top-full mt-1 rounded-xl shadow-2xl z-50 overflow-hidden flex flex-col" style={{ maxHeight: 280, left: '-40px', right: '-40px' }}>
           <div className="dropdown-divider px-3 pt-3 pb-2 flex-shrink-0 flex gap-2 items-center">
             <input
               type="text"

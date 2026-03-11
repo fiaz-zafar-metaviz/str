@@ -157,7 +157,7 @@ export default function Location({ selected, onChange }: Props) {
       </button>
 
       {open && (
-        <div className="dropdown-panel absolute top-full left-0 right-0 mt-1 rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden" style={{ maxHeight: 300 }}>
+        <div className="dropdown-panel absolute top-full mt-1 rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden" style={{ maxHeight: 300, left: '-60px', right: '-60px' }}>
 
           {/* Search + Clear */}
           <div className="dropdown-divider px-3 pt-3 pb-2 flex-shrink-0 flex gap-2 items-center">

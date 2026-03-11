@@ -8,14 +8,34 @@ import Location  from '@/components/public/searchBar/Location'
 import Button from '@/components/public/ui/Button'
 // ── Skeleton ──────────────────────────────────────────────────
 
-// Single block matching the real search bar height so layout never shifts
+function SkeletonField() {
+  return (
+    <div className="relative rounded-lg overflow-hidden h-[46px]" style={{ background: 'rgba(255,255,255,0.08)' }}>
+      <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    </div>
+  )
+}
+
 function SearchBarSkeleton() {
   return (
-    <div
-      className="w-full rounded-[10px] relative overflow-hidden"
-      style={{ height: 168, background: 'rgba(0,0,0,0.25)' }}
-    >
-      <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    <div className="w-full rounded-[10px] p-[20px_16px]" style={{ background: 'rgba(0,0,0,0.2)' }}>
+      {/* Title skeleton */}
+      <div className="hidden md:flex justify-center mb-3">
+        <div className="relative rounded overflow-hidden h-5 w-72" style={{ background: 'rgba(255,255,255,0.08)' }}>
+          <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        </div>
+      </div>
+      {/* 4 field skeletons + button — desktop */}
+      <div className="hidden md:grid md:grid-cols-5 gap-1.5">
+        <SkeletonField /><SkeletonField /><SkeletonField /><SkeletonField />
+        <div className="relative rounded-lg overflow-hidden h-[46px]" style={{ background: 'rgba(0,0,0,0.4)' }}>
+          <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        </div>
+      </div>
+      {/* Mobile 2x2 */}
+      <div className="md:hidden grid grid-cols-2 gap-1.5">
+        <SkeletonField /><SkeletonField /><SkeletonField /><SkeletonField />
+      </div>
     </div>
   )
 }

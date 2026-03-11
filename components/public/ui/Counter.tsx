@@ -33,7 +33,7 @@ export default function Counter({ label, name, value, onChange }: CounterProps) 
         {/* Minus */}
         {focused && (
           <button type="button" onMouseDown={noBlur} onClick={() => onChange(Math.max(0, value - 1))}
-            className="w-6 h-6 rounded-full bg-zinc-700 text-white flex items-center justify-center text-sm font-bold flex-shrink-0 hover:bg-zinc-600 cursor-pointer"
+            className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-sm font-bold flex-shrink-0 hover:bg-zinc-900 cursor-pointer"
           >−</button>
         )}
 
@@ -62,14 +62,14 @@ export default function Counter({ label, name, value, onChange }: CounterProps) 
         {/* Plus */}
         {focused && (
           <button type="button" onMouseDown={noBlur} onClick={() => onChange(value + 1)}
-            className="w-6 h-6 rounded-full bg-zinc-700 text-white flex items-center justify-center text-sm font-bold flex-shrink-0 hover:bg-zinc-600 cursor-pointer"
+            className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-sm font-bold flex-shrink-0 hover:bg-zinc-900 cursor-pointer"
           >+</button>
         )}
 
         {/* × clear — mouseDown prevents blur before click */}
         {value > 0 && !focused && (
           <button type="button" onMouseDown={noBlur} onClick={clear}
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-zinc-700 text-white flex items-center justify-center text-xs hover:bg-zinc-600 cursor-pointer"
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-black text-white flex items-center justify-center text-xs hover:bg-zinc-900 cursor-pointer"
           >✕</button>
         )}
       </div>
