@@ -6,17 +6,14 @@ import Counter   from '@/components/public/ui/Counter'
 import Amenities from '@/components/public/searchBar/Amenities'
 import Location  from '@/components/public/searchBar/Location'
 import Button    from '@/components/public/ui/Button'
+import { SkeletonGroup } from '@/components/public/ui/Skeleton'
 
 // ── Skeleton ──────────────────────────────────────────────────
 
-function Skeleton() {
+function SearchBarSkeleton() {
   return (
     <div className="grid grid-cols-4 gap-1.5">
-      {[...Array(4)].map((_, i) => (
-        <div key={i} className="h-11 rounded bg-secondary relative overflow-hidden">
-          <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-        </div>
-      ))}
+      <SkeletonGroup count={4} className="h-11" />
     </div>
   )
 }
@@ -44,7 +41,7 @@ export default function SearchBar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const countTimeout = useRef<ReturnType<typeof setTimeout>>()
+  const countTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const hasFilters = attendees > 0 || sleeps > 0 || amenities.length > 0 || locations.length > 0
 
   useEffect(() => {
@@ -84,8 +81,13 @@ export default function SearchBar() {
 
   return (
     <div ref={formRef} className="w-full">
-      {!ready ? <Skeleton /> : (
-        <form onSubmit={handleSubmit} className={`max-w-5xl mx-auto transition-all ${stickyClass}`}>
+      {!ready ? <SearchBarSkeleton /> : (
+        <form onSubmit={handleSubmit} className={`max-w-5xl mx-auto transition-all ${stickyClass}`} style={!sticky ? { background: 'rgba(0,0,0,0.2)', borderRadius: 10, padding: '30px 28px' } : {}}>
+
+          <h2 className="text-white text-center mb-4 leading-snug drop-shadow" style={{ fontSize: 25, fontWeight: 600 }}>
+            Search Short Term Rental Wedding Venues<br />
+            <span style={{ fontWeight: 600 }}>Changing The Game On How You Choose Your Wedding Venue!</span>
+          </h2>
 
           {count !== null && (
             <div className="flex justify-end mb-1 md:hidden">
@@ -99,13 +101,13 @@ export default function SearchBar() {
             <Amenities selected={amenities} onChange={setAmenities} />
             <Location  selected={locations} onChange={setLocations} />
 
-            <Button type="submit" className="hidden md:flex items-center gap-2 h-full px-6 whitespace-nowrap bg-black text-white border border-white/20 hover:bg-zinc-900">
+            <Button type="submit" className="hidden md:flex items-center gap-2 h-full px-6 whitespace-nowrap bg-black text-white border border-white hover:bg-zinc-900">
 
               {btnLabel}
             </Button>
           </div>
 
-          <Button type="submit" className="mt-2 w-full flex md:hidden items-center justify-center gap-2 py-3 bg-black text-white border border-white/20 hover:bg-zinc-900">
+          <Button type="submit" className="mt-2 w-full flex md:hidden items-center justify-center gap-2 py-3 bg-black text-white border border-white hover:bg-zinc-900">
             {btnLabel}
           </Button>
 

@@ -85,10 +85,46 @@ textarea::placeholder {
   color: #919191;
 }
 
+/* ============================================================
+   SKELETON / SHIMMER
+   ============================================================ */
+
 @keyframes shimmer {
   0%   { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
 }
+
+/* Base skeleton block — add height/width via Tailwind */
+.skeleton {
+  background: #2A3038;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  animation: shimmer 1.5s infinite;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
+}
+
+/* Rounded pill variant */
+.skeleton-pill { border-radius: 999px; }
+
+/* Circle variant */
+.skeleton-circle { border-radius: 50%; }
+
+[data-theme="light"] .skeleton {
+  background: #e0e0e0;
+}
+
+[data-theme="light"] .skeleton::after {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+}
+
 
 [data-theme="light"] input::placeholder,
 [data-theme="light"] textarea::placeholder {
