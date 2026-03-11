@@ -106,7 +106,6 @@ export default function SearchBar() {
           </div>
 
           <Button type="submit" className="mt-2 w-full flex md:hidden items-center justify-center gap-2 py-3 bg-black text-white border border-white/20 hover:bg-zinc-900">
-            {counting && <span className="w-3.5 h-3.5 rounded-full border-2 border-white/30 border-t-white animate-spin" />}
             {btnLabel}
           </Button>
 
