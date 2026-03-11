@@ -39,13 +39,21 @@ export default function Counter({ label, name, value, onChange }: CounterProps) 
 
         {/* Label / value */}
         <span className="flex items-center gap-1.5 flex-1 justify-center text-sm whitespace-nowrap">
-          <svg className="w-4 h-4 text-white/50 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+          <svg className="w-4 h-4 field-label flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
             <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
           </svg>
           {focused ? (
-            <span className="text-white font-medium">{value}</span>
+            <input
+              type="number"
+              min={0}
+              value={value || ''}
+              onChange={e => onChange(parseInt(e.target.value) || 0)}
+              onMouseDown={e => e.stopPropagation()}
+              className="field-label font-medium bg-transparent outline-none w-12 text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              autoFocus
+            />
           ) : (
-            <span className="text-white font-medium">
+            <span className="field-label font-medium">
               {value > 0 ? `${value} ${label}` : label}
             </span>
           )}
@@ -69,13 +77,14 @@ export default function Counter({ label, name, value, onChange }: CounterProps) 
       {/* Mobile */}
       <div className="flex md:hidden h-[46px]">
         <input
-          type="number"
+          type="text"
+          inputMode="numeric"
+          pattern="[0-9]*"
           name={name}
           value={value || ''}
           onChange={e => onChange(parseInt(e.target.value) || 0)}
           placeholder={label}
-          min={0}
-          className="w-full bg-deep border-theme rounded-lg px-4 text-sm text-white outline-none placeholder:text-white cursor-pointer"
+          className="w-full bg-deep border-theme rounded-lg px-4 text-sm field-label outline-none placeholder:text-white/50 cursor-pointer"
         />
       </div>
     </>

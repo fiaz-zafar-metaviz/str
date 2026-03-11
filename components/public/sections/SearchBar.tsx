@@ -12,9 +12,11 @@ import Button from '@/components/public/ui/Button'
 function SearchBarSkeleton() {
   return (
     <div
-      className="skeleton w-full rounded-[10px]"
-      style={{ height: 168, padding: '20px 16px', background: 'rgba(255,255,255,0.08)' }}
-    />
+      className="w-full rounded-[10px] relative overflow-hidden"
+      style={{ height: 168, background: 'rgba(0,0,0,0.25)' }}
+    >
+      <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    </div>
   )
 }
 
@@ -32,7 +34,20 @@ export default function SearchBar() {
   const [locations, setLocations] = useState<string[]>([])
   const [count, setCount] = useState<number | null>(null)
 
-  useEffect(() => { setReady(true) }, [])
+  // Load from localStorage on mount, show UI immediately
+  useEffect(() => {
+    setReady(true)
+    try {
+      const saved = localStorage.getItem('searchBar')
+      if (saved) {
+        const d = JSON.parse(saved)
+        if (d.attendees) setAttendees(d.attendees)
+        if (d.sleeps)    setSleeps(d.sleeps)
+        if (d.amenities) setAmenities(d.amenities)
+        if (d.locations) setLocations(d.locations)
+      }
+    } catch {}
+  }, [])
 
   useEffect(() => {
     const stickyOffset = (formRef.current?.offsetTop ?? 0) + 520
@@ -40,6 +55,12 @@ export default function SearchBar() {
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // Persist to localStorage whenever values change (after ready)
+  useEffect(() => {
+    if (!ready) return
+    try { localStorage.setItem('searchBar', JSON.stringify({ attendees, sleeps, amenities, locations })) } catch {}
+  }, [attendees, sleeps, amenities, locations, ready])
 
   const countTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const hasFilters = attendees > 0 || sleeps > 0 || amenities.length > 0 || locations.length > 0
@@ -94,12 +115,12 @@ export default function SearchBar() {
           </h2>
 
           {/* Desktop: single row with Search Now button */}
-          <div className="hidden md:grid md:grid-cols-[1fr_1fr_1fr_1fr_auto] gap-1.5" style={{ height: 46 }}>
+          <div className="hidden md:grid md:grid-cols-5 gap-1.5" style={{ height: 46 }}>
             <Counter   label="Attendees" name="attendees" value={attendees} onChange={setAttendees} />
             <Counter   label="Sleeps"    name="sleeps"    value={sleeps}    onChange={setSleeps} />
             <Amenities selected={amenities} onChange={setAmenities} />
             <Location  selected={locations} onChange={setLocations} />
-            <button type="submit" className="h-full flex items-center gap-2 px-6 whitespace-nowrap rounded-lg font-semibold text-sm bg-black text-white border border-white hover:bg-zinc-900 cursor-pointer transition-colors">
+            <button type="submit" className="h-full flex items-center justify-center gap-2 px-6 whitespace-nowrap rounded-lg font-semibold text-sm bg-black text-white border border-white hover:bg-zinc-900 cursor-pointer transition-colors">
               {btnLabel}
             </button>
           </div>

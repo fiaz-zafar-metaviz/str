@@ -150,24 +150,23 @@ export default function Location({ selected, onChange }: Props) {
         onClick={() => setOpen(o => !o)}
         className="w-full h-full flex items-center justify-between gap-2 bg-deep border-theme rounded-lg px-4 text-sm hover:bg-secondary transition-colors cursor-pointer"
       >
-        <span className="text-white font-medium">{label}</span>
-        <svg className={`w-4 h-4 text-white/50 flex-shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <span className="field-label font-medium">{label}</span>
+        <svg className={`w-4 h-4 field-label flex-shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
       {open && (
-        <div className="absolute top-full left-0 right-0 mt-1 rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden" style={{ maxHeight: 300, background: '#111318', border: '1px solid rgba(255,255,255,0.1)' }}>
+        <div className="dropdown-panel absolute top-full left-0 right-0 mt-1 rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden" style={{ maxHeight: 300 }}>
 
           {/* Search + Clear */}
-          <div className="px-3 pt-3 pb-2 flex-shrink-0 flex gap-2 items-center" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+          <div className="dropdown-divider px-3 pt-3 pb-2 flex-shrink-0 flex gap-2 items-center">
             <input
               type="text"
               placeholder="Search..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="flex-1 rounded-lg px-3 py-1.5 text-sm text-white outline-none placeholder:text-muted"
-              style={{ background: 'rgba(255,255,255,0.07)' }}
+              className="dropdown-search-input flex-1 rounded-lg px-3 py-1.5 text-sm outline-none"
             />
             {selected.length > 0 && (
               <button type="button" onClick={() => onChange([])} className="text-xs text-danger whitespace-nowrap hover:opacity-80 transition-opacity">
@@ -190,8 +189,7 @@ export default function Location({ selected, onChange }: Props) {
                   <button
                     type="button"
                     onClick={() => toggleGroup(gVal)}
-                    className="w-full flex items-center justify-between px-3 py-2 text-xs font-bold uppercase tracking-wider transition-colors hover:opacity-80"
-                    style={{ color: '#9ca3af', background: 'rgba(255,255,255,0.03)' }}
+                    className="dropdown-group-header w-full flex items-center justify-between px-3 py-2 text-xs font-bold uppercase tracking-wider transition-colors hover:opacity-80"
                   >
                     {group}
                     <svg className={`w-3 h-3 transition-transform ${isCollapsed ? '-rotate-90' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -207,20 +205,15 @@ export default function Location({ selected, onChange }: Props) {
                         key={state.value}
                         type="button"
                         onClick={() => toggle(state.value)}
-                        className="w-full text-left px-3 py-2 text-sm flex items-center gap-3 transition-colors"
-                        style={{ color: isSelected ? '#ffffff' : '#d1d5db', background: isSelected ? 'rgba(255,255,255,0.06)' : 'transparent' }}
-                        onMouseEnter={e => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.04)' }}
-                        onMouseLeave={e => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = 'transparent' }}
+                        className={`dropdown-option w-full text-left px-3 py-2 text-sm flex items-center gap-3 transition-colors${isSelected ? ' is-selected' : ''}`}
                       >
-                        {/* Thumbnail */}
                         {state.img
                           ? <img src={state.img} alt="" className="w-9 h-9 rounded-lg object-cover flex-shrink-0" />
                           : <span className="w-9 h-9 rounded-lg flex-shrink-0" style={{ background: 'rgba(255,255,255,0.08)' }} />
                         }
                         <span className="flex-1">{state.label}</span>
-                        {/* Checkmark */}
                         {isSelected && (
-                          <svg className="w-4 h-4 flex-shrink-0" style={{ color: '#4ade80' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                           </svg>
                         )}

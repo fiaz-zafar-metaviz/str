@@ -46,7 +46,7 @@ export default function MultiSelect({ name, placeholder, options, selected, onCh
         if (!filtered.length) return null
         return (
           <div key={group}>
-            <div className="px-3 py-1.5 text-xs font-semibold text-subtle uppercase tracking-wider bg-tertiary sticky top-0">
+            <div className="dropdown-group-header px-3 py-1.5 text-xs font-semibold uppercase tracking-wider sticky top-0">
               {group}
             </div>
             {filtered.map(opt => <Option key={opt} label={opt} checked={selected.includes(opt)} onToggle={() => toggle(opt)} />)}
@@ -69,28 +69,28 @@ export default function MultiSelect({ name, placeholder, options, selected, onCh
         onClick={() => setOpen(o => !o)}
         className="w-full h-full flex items-center justify-between gap-2 bg-deep border-theme rounded-lg px-4 text-sm hover:bg-secondary transition-colors cursor-pointer"
       >
-        <span className="text-white font-medium">{label}</span>
-        <svg className={`w-4 h-4 text-white/50 flex-shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <span className="field-label font-medium">{label}</span>
+        <svg className={`w-4 h-4 field-label flex-shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
       {open && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-deep border-theme rounded-lg shadow-lg z-50 overflow-hidden flex flex-col" style={{ maxHeight: 260 }}>
-          <div className="p-2 border-b border-theme bg-deep flex-shrink-0">
+        <div className="dropdown-panel absolute top-full left-0 right-0 mt-1 rounded-xl shadow-2xl z-50 overflow-hidden flex flex-col" style={{ maxHeight: 280 }}>
+          <div className="dropdown-divider px-3 pt-3 pb-2 flex-shrink-0 flex gap-2 items-center">
             <input
               type="text"
               placeholder="Search..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full bg-input rounded px-3 py-1.5 text-sm text-primary outline-none"
+              className="dropdown-search-input flex-1 rounded-lg px-3 py-1.5 text-sm outline-none"
             />
+            {selected.length > 0 && (
+              <button type="button" onClick={() => onChange([])} className="text-xs text-white/60 whitespace-nowrap hover:text-white transition-colors cursor-pointer">
+                Clear All
+              </button>
+            )}
           </div>
-          {selected.length > 0 && (
-            <button type="button" onClick={() => onChange([])} className="text-left px-3 py-1.5 text-xs text-danger hover:bg-tertiary transition-colors flex-shrink-0">
-              Clear all
-            </button>
-          )}
           <div className="overflow-y-auto">{renderOptions()}</div>
         </div>
       )}
@@ -103,12 +103,14 @@ function Option({ label, checked, onToggle }: { label: string; checked: boolean;
     <button
       type="button"
       onClick={onToggle}
-      className="w-full text-left px-3 py-2 text-sm text-secondary hover:bg-tertiary flex items-center gap-2 transition-colors"
+      className={`dropdown-option w-full text-left px-3 py-2 text-sm flex items-center justify-between gap-2 transition-colors cursor-pointer${checked ? ' is-selected' : ''}`}
     >
-      <span className={`w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center text-xs ${checked ? 'bg-white border-white text-black' : 'border-theme'}`}>
-        {checked && '✓'}
-      </span>
-      {label}
+      <span>{label}</span>
+      {checked && (
+        <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+        </svg>
+      )}
     </button>
   )
 }
