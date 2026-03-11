@@ -136,6 +136,12 @@ textarea::placeholder {
    SIDEBAR
    ============================================================ */
 
+/* Hide navbar + sidebar when mobile popup is open */
+body.popup-open nav,
+body.popup-open .sidebar-drawer {
+  display: none !important;
+}
+
 .sidebar-drawer {
   background: #1a1d27;
   border-left: 1px solid rgba(255,255,255,0.08);
@@ -247,3 +253,20 @@ textarea::placeholder {
 [data-theme="light"] .dropdown-option { color: #374151; }
 [data-theme="light"] .dropdown-option:hover { background: #f5f5f5; }
 [data-theme="light"] .dropdown-option.is-selected { color: #111827; background: #eff6ff; }
+
+/* Location group row highlight */
+.location-group-row { background: rgba(255,255,255,0.04); }
+[data-theme="light"] .location-group-row { background: rgba(0,0,0,0.04); }
+
+/* Scrollbar styling for dropdowns + mobile popup */
+.dropdown-panel ::-webkit-scrollbar,
+.dropdown-panel::-webkit-scrollbar,
+.mobile-popup-scroll::-webkit-scrollbar { width: 4px; }
+.dropdown-panel ::-webkit-scrollbar-track,
+.dropdown-panel::-webkit-scrollbar-track,
+.mobile-popup-scroll::-webkit-scrollbar-track { background: transparent; }
+.dropdown-panel ::-webkit-scrollbar-thumb,
+.dropdown-panel::-webkit-scrollbar-thumb,
+.mobile-popup-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+[data-theme="light"] .dropdown-panel ::-webkit-scrollbar-thumb,
+[data-theme="light"] .mobile-popup-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); }

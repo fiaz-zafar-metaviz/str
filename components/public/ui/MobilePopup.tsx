@@ -16,17 +16,25 @@ interface Props {
 }
 
 export default function MobilePopup({ open, onClose, title, selected, onClear, searchable, search, onSearch, children }: Props) {
-  // Lock body scroll when open
+  // Lock body scroll + hide navbar when open
   useEffect(() => {
-    if (open) document.body.style.overflow = 'hidden'
-    else document.body.style.overflow = ''
-    return () => { document.body.style.overflow = '' }
+    if (open) {
+      document.body.style.overflow = 'hidden'
+      document.body.classList.add('popup-open')
+    } else {
+      document.body.style.overflow = ''
+      document.body.classList.remove('popup-open')
+    }
+    return () => {
+      document.body.style.overflow = ''
+      document.body.classList.remove('popup-open')
+    }
   }, [open])
 
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 z-[200] flex flex-col" style={{ background: 'var(--color-deep, #0e1016)' }}>
+    <div className="fixed inset-0 z-[300] flex flex-col bg-primary">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 flex-shrink-0">
         <span className="font-semibold text-base field-label">{title}</span>
@@ -57,7 +65,7 @@ export default function MobilePopup({ open, onClose, title, selected, onClear, s
       )}
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="mobile-popup-scroll flex-1 overflow-y-auto">
         {children}
       </div>
 

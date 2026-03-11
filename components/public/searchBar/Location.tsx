@@ -176,23 +176,19 @@ function LocationList({
 
         return (
           <div key={group}>
-            {/* Group row — same layout as state rows */}
+            {/* Group row — centered text, no image */}
             <button
               type="button"
               onClick={() => toggleGroup(filtered)}
-              className={`dropdown-option w-full text-left px-3 py-2 text-sm flex items-center gap-3 transition-colors font-semibold${allSel ? ' is-selected' : ''}`}
+              className={`dropdown-option w-full px-3 py-2 text-sm flex items-center justify-center gap-2 transition-colors font-semibold${allSel ? ' is-selected' : ' location-group-row'}`}
             >
-              {/* Placeholder aligned with state images */}
-              <span className="w-9 h-9 rounded-lg flex-shrink-0 flex items-center justify-center text-lg" style={{ background: 'rgba(255,255,255,0.06)' }}>
-                {GROUP_EMOJI[group] ?? '🌍'}
-              </span>
-              <span className="flex-1">{group}</span>
+              <span>{group}</span>
               {allSel && <Check />}
               {someSel && <Partial />}
             </button>
 
-            {/* States — indented */}
-            {filtered.map(state => {
+            {/* States — only show when group is NOT fully selected */}
+            {!allSel && filtered.map(state => {
               const isSel = selected.includes(state.value)
               return (
                 <button

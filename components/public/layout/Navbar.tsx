@@ -13,7 +13,9 @@ export default function Navbar() {
       <nav className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-5 py-1">
 
         {/* Left — Logo */}
-        <Logo size={52} />
+        <div className="w-[52px] md:w-[70px]">
+          <Logo size={70} />
+        </div>
 
         {/* Center — CTA */}
         <Button
