@@ -17,10 +17,10 @@ export default function AboutPage() {
           <span className="inline-block text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: 'rgba(59,130,246,0.9)' }}>
             Our Story
           </span>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight" style={{ letterSpacing: '-1px' }}>
+          <h1 className="text-4xl md:text-6xl font-bold text-primary mb-6 leading-tight" style={{ letterSpacing: '-1px' }}>
             Changing The Game On<br className="hidden md:block" /> How You Choose Your<br className="hidden md:block" /> Wedding Venue
           </h1>
-          <p className="text-lg md:text-xl leading-relaxed" style={{ color: '#d0d0d0' }}>
+          <p className="text-lg md:text-xl leading-relaxed text-secondary">
             STR Wedding curates the finest short-term rental properties so you can
             discover your perfect wedding venue — without searching for days or weeks.
           </p>
@@ -31,14 +31,14 @@ export default function AboutPage() {
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">Our Mission</h2>
-            <p className="leading-relaxed mb-4" style={{ color: '#d0d0d0' }}>
+            <h2 className="text-2xl md:text-3xl font-bold text-primary mb-5">Our Mission</h2>
+            <p className="leading-relaxed mb-4 text-secondary">
               We believe that finding an extraordinary wedding venue shouldn't be a full-time job.
               STR Wedding was built to pre-filter thousands of short-term rental properties across
               the U.S. and beyond — surfacing only the venues that truly deliver on amenities,
               reviews, and owner dedication.
             </p>
-            <p className="leading-relaxed" style={{ color: '#d0d0d0' }}>
+            <p className="leading-relaxed text-secondary">
               Whether you're dreaming of a beachfront mansion in Florida, a mountain retreat in
               Colorado, or a tropical paradise in the Caribbean, we make it effortless to find
               and compare the best options for your special day.
@@ -53,13 +53,9 @@ export default function AboutPage() {
               { stat: '50+',      sub: 'U.S. States' },
               { stat: '100%',     sub: 'Curated Venues' },
             ].map(({ stat, sub }) => (
-              <div
-                key={sub}
-                className="rounded-xl p-6 text-center"
-                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
-              >
-                <div className="text-3xl font-bold text-white mb-1">{stat}</div>
-                <div className="text-sm" style={{ color: '#919191' }}>{sub}</div>
+              <div key={sub} className="bg-secondary rounded-xl p-6 text-center border-theme">
+                <div className="text-3xl font-bold text-primary mb-1">{stat}</div>
+                <div className="text-sm text-muted">{sub}</div>
               </div>
             ))}
           </div>
@@ -67,16 +63,16 @@ export default function AboutPage() {
       </section>
 
       {/* Founder's Vision */}
-      <section className="py-16 px-4" style={{ background: 'rgba(255,255,255,0.02)' }}>
+      <section className="py-16 px-4 bg-secondary">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Why We Built This</h2>
-          <p className="text-lg leading-relaxed mb-6" style={{ color: '#d0d0d0' }}>
+          <h2 className="text-2xl md:text-3xl font-bold text-primary mb-6">Why We Built This</h2>
+          <p className="text-lg leading-relaxed mb-6 text-secondary">
             Group celebrations create the most lasting memories — and when costs are shared
             among friends and family, even a $2,000-per-night mansion becomes surprisingly
             affordable. We wanted to create experiences we never had growing up: taking loved
             ones to stunning estates, private islands, and luxury retreats.
           </p>
-          <p className="text-lg leading-relaxed" style={{ color: '#d0d0d0' }}>
+          <p className="text-lg leading-relaxed text-secondary">
             Too many couples overlook premium properties because of sticker shock — missing
             out on venues with private pools, full kitchens, sprawling grounds, and everything
             you need right on-site. STR Wedding removes that barrier by showing you the full
@@ -88,7 +84,7 @@ export default function AboutPage() {
       {/* Destinations */}
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-10">Where We Cover</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-primary text-center mb-10">Where We Cover</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
             {[
               { flag: '🇺🇸', name: 'United States' },
@@ -98,13 +94,9 @@ export default function AboutPage() {
               { flag: '🌎', name: 'Central America' },
               { flag: '🇪🇺', name: 'Europe' },
             ].map(({ flag, name }) => (
-              <div
-                key={name}
-                className="rounded-xl p-4 flex flex-col items-center gap-2 text-center"
-                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
-              >
+              <div key={name} className="bg-secondary border-theme rounded-xl p-4 flex flex-col items-center gap-2 text-center">
                 <span className="text-3xl">{flag}</span>
-                <span className="text-xs font-medium" style={{ color: '#d0d0d0' }}>{name}</span>
+                <span className="text-xs font-medium text-secondary">{name}</span>
               </div>
             ))}
           </div>
@@ -114,8 +106,8 @@ export default function AboutPage() {
       {/* CTA */}
       <section className="py-20 px-4 text-center">
         <div className="max-w-xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Ready to Find Your Venue?</h2>
-          <p className="mb-8" style={{ color: '#d0d0d0' }}>
+          <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4">Ready to Find Your Venue?</h2>
+          <p className="mb-8 text-secondary">
             Browse our curated collection of STR wedding properties and start planning your perfect day.
           </p>
           <a

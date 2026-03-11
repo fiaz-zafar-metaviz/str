@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { Heart, ChevronDown, X } from 'lucide-react'
 import ThemeToggle from '@/components/public/ui/ThemeToggle'
 
@@ -58,7 +59,7 @@ export default function Sidebar({ open, onClose }: Props) {
         {/* Nav items */}
         <nav className="flex-1 px-4 flex flex-col gap-1 overflow-y-auto">
           {NAV_ITEMS.map(item => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               className="sidebar-nav-item flex items-center gap-2 px-3 py-3 rounded-lg transition-colors text-sm font-medium"
@@ -68,7 +69,7 @@ export default function Sidebar({ open, onClose }: Props) {
                 {item.label}
                 {item.heart && <Heart className="w-3.5 h-3.5 fill-current flex-shrink-0" />}
               </span>
-            </a>
+            </Link>
           ))}
 
           {/* Affiliate dropdown */}
@@ -84,24 +85,24 @@ export default function Sidebar({ open, onClose }: Props) {
             {affiliateOpen && (
               <div className="ml-3 mt-1 flex flex-col gap-0.5 border-l border-white/10 pl-3">
                 {AFFILIATE_LINKS.map(link => (
-                  <a key={link.href} href={link.href} onClick={onClose}
+                  <Link key={link.href} href={link.href} onClick={onClose}
                     className="sidebar-nav-item py-2 px-2 rounded text-sm transition-colors"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
             )}
           </div>
 
           {/* Partner Login */}
-          <a
+          <Link
             href="/partner/login"
             onClick={onClose}
             className="mt-2 px-3 py-2.5 rounded-lg border border-current/30 text-sm font-semibold text-center transition-colors sidebar-nav-item"
           >
             Partner Login
-          </a>
+          </Link>
         </nav>
 
         {/* Theme toggle at bottom */}
