@@ -8,9 +8,9 @@ import Location  from '@/components/public/searchBar/Location'
 import Button from '@/components/public/ui/Button'
 // ── Skeleton ──────────────────────────────────────────────────
 
-function SkeletonField() {
+function SkeletonField({ mobile }: { mobile?: boolean }) {
   return (
-    <div className="relative rounded-lg overflow-hidden h-[46px]" style={{ background: 'rgba(255,255,255,0.08)' }}>
+    <div className={`relative rounded-lg overflow-hidden ${mobile ? 'h-[42px]' : 'h-[46px]'}`} style={{ background: 'rgba(255,255,255,0.08)' }}>
       <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
     </div>
   )
@@ -34,7 +34,7 @@ function SearchBarSkeleton() {
       </div>
       {/* Mobile 2x2 */}
       <div className="md:hidden grid grid-cols-2 gap-1.5">
-        <SkeletonField /><SkeletonField /><SkeletonField /><SkeletonField />
+        <SkeletonField mobile /><SkeletonField mobile /><SkeletonField mobile /><SkeletonField mobile />
       </div>
     </div>
   )
@@ -130,8 +130,9 @@ export default function SearchBar() {
             Search Short Term Rental Wedding Venues<br />
             Changing The Game On How You Choose Your Wedding Venue!
           </h2>
-          <h2 className="md:hidden text-white text-center mb-2 text-[13px] leading-snug drop-shadow" style={{ fontWeight: 600 }}>
-            Search STR Wedding Venues
+          <h2 className="md:hidden text-white text-center mb-2 text-[24px] leading-snug drop-shadow" style={{ fontWeight: 600 }}>
+            Search Short Term Rental Wedding Venues<br />
+            Changing The Game On How You Choose Your Wedding Venue!
           </h2>
 
           {/* Desktop: single row with Search Now button */}
@@ -149,11 +150,11 @@ export default function SearchBar() {
           <div className="md:hidden grid grid-cols-2 gap-1.5">
             <Counter   label="Attendees" name="attendees" value={attendees} onChange={setAttendees} />
             <Counter   label="Sleeps"    name="sleeps"    value={sleeps}    onChange={setSleeps} />
-            <Amenities selected={amenities} onChange={setAmenities} />
-            <Location  selected={locations} onChange={setLocations} />
+            <Amenities selected={amenities} onChange={setAmenities} mobilePopup />
+            <Location  selected={locations} onChange={setLocations} mobilePopup />
           </div>
-          <Button type="submit" className="mt-1.5 w-full flex md:hidden items-center justify-center gap-2 py-3 bg-black text-white border border-white hover:bg-zinc-900">
-            {btnLabel}{count !== null ? ` (${count})` : ''}
+          <Button type="submit" className="mt-1.5 w-full flex md:hidden items-center justify-center gap-2 py-2.5 text-sm bg-black text-white border border-white hover:bg-zinc-900">
+            {btnLabel}
           </Button>
 
         </form>

@@ -19,7 +19,7 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center pt-44 md:pt-52 pb-10 md:pb-14 px-4">
         <h1
-          className="text-white text-center whitespace-nowrap text-[65px]"
+          className="text-white text-center whitespace-nowrap text-[36px] sm:text-[50px] md:text-[65px]"
           style={{ fontFamily: "'Zen Old Mincho', serif", fontWeight: 800, letterSpacing: '-2px', lineHeight: '1.1em', marginBottom: '20px', textShadow: '1px 1px 3px rgba(0,0,0,.2),-2px 2px 6px rgba(0,0,0,.3)' }}
         >
           STR WEDDING

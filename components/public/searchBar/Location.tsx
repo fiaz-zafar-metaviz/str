@@ -1,11 +1,21 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import MobilePopup from '@/components/public/ui/MobilePopup'
 
 type State = { label: string; value: string; img?: string }
 type Group = { group: string; value: string; states: State[] }
 
 function img(seed: string) { return `https://picsum.photos/seed/${seed}/80/80` }
+
+const GROUP_EMOJI: Record<string, string> = {
+  'United States': '🇺🇸',
+  'Caribbean':     '🌴',
+  'Mexico':        '🇲🇽',
+  'Canada':        '🇨🇦',
+  'Central America': '🌎',
+  'Europe':        '🇪🇺',
+}
 
 const LOCATIONS: Group[] = [
   {
@@ -110,13 +120,108 @@ const LOCATIONS: Group[] = [
 interface Props {
   selected: string[]
   onChange: (value: string[]) => void
+  mobilePopup?: boolean
 }
 
-export default function Location({ selected, onChange }: Props) {
-  const [open, setOpen]               = useState(false)
-  const [search, setSearch]           = useState('')
-  const [collapsed, setCollapsed]     = useState<Record<string, boolean>>({})
-  const ref                           = useRef<HTMLDivElement>(null)
+// Checkmark SVG
+function Check() {
+  return (
+    <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+    </svg>
+  )
+}
+
+// Partial (dash) SVG for when some children selected
+function Partial() {
+  return (
+    <svg className="w-4 h-4 flex-shrink-0 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 12h14" />
+    </svg>
+  )
+}
+
+function LocationList({
+  locations, selected, onChange, q,
+}: { locations: Group[]; selected: string[]; onChange: (v: string[]) => void; q: string }) {
+
+  function toggleState(val: string) {
+    onChange(selected.includes(val) ? selected.filter(s => s !== val) : [...selected, val])
+  }
+
+  function toggleGroup(states: State[]) {
+    const vals = states.map(s => s.value)
+    const allSel = vals.every(v => selected.includes(v))
+    if (allSel) {
+      // deselect all children
+      onChange(selected.filter(v => !vals.includes(v)))
+    } else {
+      // select all children (deselect if any were individually selected before)
+      const without = selected.filter(v => !vals.includes(v))
+      onChange([...without, ...vals])
+    }
+  }
+
+  return (
+    <>
+      {locations.map(({ group, states }) => {
+        const filtered = states.filter(s =>
+          !q || s.label.toLowerCase().includes(q) || group.toLowerCase().includes(q)
+        )
+        if (!filtered.length) return null
+
+        const selCount = filtered.filter(s => selected.includes(s.value)).length
+        const allSel  = selCount === filtered.length && filtered.length > 0
+        const someSel = selCount > 0 && !allSel
+
+        return (
+          <div key={group}>
+            {/* Group row — same layout as state rows */}
+            <button
+              type="button"
+              onClick={() => toggleGroup(filtered)}
+              className={`dropdown-option w-full text-left px-3 py-2 text-sm flex items-center gap-3 transition-colors font-semibold${allSel ? ' is-selected' : ''}`}
+            >
+              {/* Placeholder aligned with state images */}
+              <span className="w-9 h-9 rounded-lg flex-shrink-0 flex items-center justify-center text-lg" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                {GROUP_EMOJI[group] ?? '🌍'}
+              </span>
+              <span className="flex-1">{group}</span>
+              {allSel && <Check />}
+              {someSel && <Partial />}
+            </button>
+
+            {/* States — indented */}
+            {filtered.map(state => {
+              const isSel = selected.includes(state.value)
+              return (
+                <button
+                  key={state.value}
+                  type="button"
+                  onClick={() => toggleState(state.value)}
+                  className={`dropdown-option w-full text-left pl-6 pr-3 py-2 text-sm flex items-center gap-3 transition-colors${isSel ? ' is-selected' : ''}`}
+                >
+                  {state.img
+                    ? <img src={state.img} alt="" className="w-9 h-9 rounded-lg object-cover flex-shrink-0" />
+                    : <span className="w-9 h-9 rounded-lg flex-shrink-0" style={{ background: 'rgba(255,255,255,0.08)' }} />
+                  }
+                  <span className="flex-1">{state.label}</span>
+                  {isSel && <Check />}
+                </button>
+              )
+            })}
+          </div>
+        )
+      })}
+    </>
+  )
+}
+
+export default function Location({ selected, onChange, mobilePopup }: Props) {
+  const [open, setOpen]             = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const [search, setSearch]         = useState('')
+  const ref                         = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     function onClickOutside(e: MouseEvent) {
@@ -126,20 +231,41 @@ export default function Location({ selected, onChange }: Props) {
     return () => document.removeEventListener('mousedown', onClickOutside)
   }, [])
 
-  function toggle(val: string) {
-    onChange(selected.includes(val) ? selected.filter(s => s !== val) : [...selected, val])
-  }
-
-  function toggleGroup(groupVal: string) {
-    setCollapsed(prev => ({ ...prev, [groupVal]: !prev[groupVal] }))
-  }
-
   const label =
     selected.length === 0 ? 'Locations' :
     selected.length === 1 ? LOCATIONS.flatMap(g => g.states).find(s => s.value === selected[0])?.label ?? selected[0] :
     `${selected.length} Locations`
 
   const q = search.toLowerCase()
+
+  if (mobilePopup) {
+    return (
+      <>
+        <button
+          type="button"
+          onClick={() => setMobileOpen(true)}
+          className="w-full h-[42px] flex items-center justify-between gap-2 bg-deep border-theme rounded-lg px-3 text-sm cursor-pointer"
+        >
+          <span className="field-label font-medium truncate">{label}</span>
+          <svg className="w-4 h-4 field-label flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <MobilePopup
+          open={mobileOpen}
+          onClose={() => setMobileOpen(false)}
+          title="Locations"
+          selected={selected}
+          onClear={() => onChange([])}
+          searchable
+          search={search}
+          onSearch={setSearch}
+        >
+          <LocationList locations={LOCATIONS} selected={selected} onChange={onChange} q={q} />
+        </MobilePopup>
+      </>
+    )
+  }
 
   return (
     <div ref={ref} className="relative h-full">
@@ -169,60 +295,14 @@ export default function Location({ selected, onChange }: Props) {
               className="dropdown-search-input flex-1 rounded-lg px-3 py-1.5 text-sm outline-none"
             />
             {selected.length > 0 && (
-              <button type="button" onClick={() => onChange([])} className="text-xs text-danger whitespace-nowrap hover:opacity-80 transition-opacity">
+              <button type="button" onClick={() => onChange([])} className="text-xs field-label whitespace-nowrap hover:opacity-60 transition-opacity cursor-pointer">
                 Clear All
               </button>
             )}
           </div>
 
           <div className="overflow-y-auto">
-            {LOCATIONS.map(({ group, value: gVal, states }) => {
-              const filtered = states.filter(s =>
-                !q || s.label.toLowerCase().includes(q) || group.toLowerCase().includes(q)
-              )
-              if (!filtered.length) return null
-              const isCollapsed = collapsed[gVal]
-
-              return (
-                <div key={gVal}>
-                  {/* Group header */}
-                  <button
-                    type="button"
-                    onClick={() => toggleGroup(gVal)}
-                    className="dropdown-group-header w-full flex items-center justify-between px-3 py-2 text-xs font-bold uppercase tracking-wider transition-colors hover:opacity-80"
-                  >
-                    {group}
-                    <svg className={`w-3 h-3 transition-transform ${isCollapsed ? '-rotate-90' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-
-                  {/* States */}
-                  {!isCollapsed && filtered.map(state => {
-                    const isSelected = selected.includes(state.value)
-                    return (
-                      <button
-                        key={state.value}
-                        type="button"
-                        onClick={() => toggle(state.value)}
-                        className={`dropdown-option w-full text-left px-3 py-2 text-sm flex items-center gap-3 transition-colors${isSelected ? ' is-selected' : ''}`}
-                      >
-                        {state.img
-                          ? <img src={state.img} alt="" className="w-9 h-9 rounded-lg object-cover flex-shrink-0" />
-                          : <span className="w-9 h-9 rounded-lg flex-shrink-0" style={{ background: 'rgba(255,255,255,0.08)' }} />
-                        }
-                        <span className="flex-1">{state.label}</span>
-                        {isSelected && (
-                          <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                          </svg>
-                        )}
-                      </button>
-                    )
-                  })}
-                </div>
-              )
-            })}
+            <LocationList locations={LOCATIONS} selected={selected} onChange={onChange} q={q} />
           </div>
         </div>
       )}

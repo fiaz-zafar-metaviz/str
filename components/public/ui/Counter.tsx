@@ -75,7 +75,7 @@ export default function Counter({ label, name, value, onChange }: CounterProps) 
       </div>
 
       {/* Mobile */}
-      <div className="flex md:hidden h-[46px]">
+      <div className="flex md:hidden h-[42px]">
         <input
           type="text"
           inputMode="numeric"
