@@ -115,7 +115,7 @@ export default function SearchBar() {
   }
 
   const stickyClass = sticky
-    ? 'fixed top-0 z-50 rounded-b-lg shadow-xl px-4 py-2.5 bg-deep'
+    ? 'fixed top-0 left-0 right-0 z-50 shadow-xl px-4 py-2.5 bg-deep'
     : 'p-0'
 
   const btnLabel = `Search Now${count !== null ? ` (${count})` : ''}`
@@ -125,15 +125,19 @@ export default function SearchBar() {
       {!ready ? <SearchBarSkeleton /> : (
         <form onSubmit={handleSubmit} className={`max-w-5xl mx-auto transition-all ${stickyClass}`} style={!sticky ? { background: 'rgba(0,0,0,0.2)', borderRadius: 10, padding: '20px 16px 28px' } : {}}>
 
-          {/* Subtitle — hidden on mobile to save space */}
-          <h2 className="hidden md:block text-white text-center mb-3 leading-snug drop-shadow text-[25px]" style={{ fontWeight: 600 }}>
-            Search Short Term Rental Wedding Venues<br />
-            Changing The Game On How You Choose Your Wedding Venue!
-          </h2>
-          <h2 className="md:hidden text-white text-center mb-2 text-[24px] leading-snug drop-shadow" style={{ fontWeight: 600 }}>
-            Search Short Term Rental Wedding Venues<br />
-            Changing The Game On How You Choose Your Wedding Venue!
-          </h2>
+          {/* Subtitle — hidden when sticky and on mobile */}
+          {!sticky && (
+            <>
+              <h2 className="hidden md:block text-white text-center mb-3 leading-snug drop-shadow text-[25px]" style={{ fontWeight: 600 }}>
+                Search Short Term Rental Wedding Venues<br />
+                Changing The Game On How You Choose Your Wedding Venue!
+              </h2>
+              <h2 className="md:hidden text-white text-center mb-2 text-[24px] leading-snug drop-shadow" style={{ fontWeight: 600 }}>
+                Search Short Term Rental Wedding Venues<br />
+                Changing The Game On How You Choose Your Wedding Venue!
+              </h2>
+            </>
+          )}
 
           {/* Desktop: single row with Search Now button */}
           <div className="hidden md:grid md:grid-cols-5 gap-1.5" style={{ height: 46 }}>

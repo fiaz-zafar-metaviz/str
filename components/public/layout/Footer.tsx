@@ -39,7 +39,7 @@ const popularLocations = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#111] text-white border-t border-white/10">
+    <footer className="bg-black text-white border-t border-white/10">
       <div className="px-6 md:px-12 py-12 md:py-16">
         <div className="grid gap-10 md:grid-cols-[5fr_2fr_5fr] lg:gap-12">
           {/* About with Logo */}
@@ -48,9 +48,9 @@ export default function Footer() {
               <Image
                 src={logoSrc}
                 alt={siteConfig.name}
-                width={100}
-                height={100}
-                className="rounded-full object-cover"
+                width={160}
+                height={160}
+                className="rounded-full object-cover w-24 h-24 md:w-36 md:h-36 lg:w-40 lg:h-40"
               />
             </Link>
             <p className="text-sm leading-relaxed text-white/70">

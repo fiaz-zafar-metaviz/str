@@ -23,11 +23,11 @@ export default function AmenitiesCarousel() {
   const scrollRef = useRef<HTMLDivElement>(null)
 
   const scroll = (dir: 'left' | 'right') => {
-    scrollRef.current?.scrollBy({ left: dir === 'left' ? -280 : 280, behavior: 'smooth' })
+    scrollRef.current?.scrollBy({ left: dir === 'left' ? -320 : 320, behavior: 'smooth' })
   }
 
   return (
-    <section className="py-12 md:py-16">
+    <section className="py-12 md:py-16 w-full">
       <h2 className="mb-8 text-center text-2xl font-semibold text-primary md:text-3xl lg:text-4xl">
         Popular Amenities
       </h2>
@@ -36,7 +36,7 @@ export default function AmenitiesCarousel() {
         {/* Left Arrow */}
         <button
           onClick={() => scroll('left')}
-          className="absolute -left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-secondary shadow-lg transition-all hover:bg-tertiary md:-left-5"
+          className="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-secondary shadow-lg transition-all hover:bg-tertiary"
           aria-label="Scroll left"
         >
           <svg className="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -47,7 +47,7 @@ export default function AmenitiesCarousel() {
         {/* Carousel */}
         <div
           ref={scrollRef}
-          className="flex gap-4 overflow-x-auto px-8 pb-4 md:gap-5"
+          className="flex gap-5 overflow-x-auto px-14 pb-4"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {popularAmenities.map(a => (
@@ -58,7 +58,7 @@ export default function AmenitiesCarousel() {
         {/* Right Arrow */}
         <button
           onClick={() => scroll('right')}
-          className="absolute -right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-secondary shadow-lg transition-all hover:bg-tertiary md:-right-5"
+          className="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-secondary shadow-lg transition-all hover:bg-tertiary"
           aria-label="Scroll right"
         >
           <svg className="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
