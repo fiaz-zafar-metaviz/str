@@ -16,5 +16,5 @@ export async function POST(req: NextRequest) {
   const buffer = Buffer.from(await file.arrayBuffer())
   const url = await uploadToR2(buffer, key, file.type)
 
-  return NextResponse.json({ url, key })
+  return NextResponse.json({ url })
 }

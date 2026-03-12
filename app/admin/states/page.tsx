@@ -2,14 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from 'react'
 
-const GROUPS: Record<number, string> = {
-  1: '🇺🇸 United States',
-  2: '🌴 Caribbean',
-  3: '🇲🇽 Mexico',
-  4: '🇨🇦 Canada',
-  5: '🌎 Central America',
-  6: '🇪🇺 Europe',
-}
+type Group = { id: number; name: string }
 
 type State = {
   id: string
@@ -26,6 +19,7 @@ type State = {
 
 export default function AdminStatesPage() {
   const [states, setStates] = useState<State[]>([])
+  const [groups, setGroups] = useState<Group[]>([])
   const [loading, setLoading] = useState(true)
   const [filterGroup, setFilterGroup] = useState<number | null>(null)
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -50,7 +44,19 @@ export default function AdminStatesPage() {
     setLoading(false)
   }, [])
 
-  useEffect(() => { fetchStates() }, [fetchStates])
+  const fetchGroups = useCallback(async () => {
+    try {
+      const res = await fetch('/api/admin/location-groups')
+      const data = await res.json()
+      if (Array.isArray(data)) setGroups(data)
+    } catch (e) {
+      console.error('Failed to fetch groups:', e)
+    }
+  }, [])
+
+  useEffect(() => { fetchStates(); fetchGroups() }, [fetchStates, fetchGroups])
+
+  const groupMap = Object.fromEntries(groups.map(g => [g.id, g.name]))
 
   const resetForm = () => {
     setForm({ name: '', group_id: 1, image: '', thumbnail: '', featured: false, order: 0 })
@@ -126,15 +132,15 @@ export default function AdminStatesPage() {
           >
             All ({states.length})
           </button>
-          {Object.entries(GROUPS).map(([id, label]) => {
-            const count = states.filter(s => s.group_id === Number(id)).length
+          {groups.map(g => {
+            const count = states.filter(s => s.group_id === g.id).length
             return (
               <button
-                key={id}
-                onClick={() => setFilterGroup(Number(id))}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${filterGroup === Number(id) ? 'bg-blue-600' : 'bg-white/10 hover:bg-white/20'}`}
+                key={g.id}
+                onClick={() => setFilterGroup(g.id)}
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${filterGroup === g.id ? 'bg-blue-600' : 'bg-white/10 hover:bg-white/20'}`}
               >
-                {label} ({count})
+                {g.name} ({count})
               </button>
             )
           })}
@@ -166,8 +172,8 @@ export default function AdminStatesPage() {
                     onChange={e => setForm(f => ({ ...f, group_id: Number(e.target.value) }))}
                     className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-blue-500"
                   >
-                    {Object.entries(GROUPS).map(([id, label]) => (
-                      <option key={id} value={id}>{label}</option>
+                    {groups.map(g => (
+                      <option key={g.id} value={g.id}>{g.name}</option>
                     ))}
                   </select>
                 </div>
@@ -264,10 +270,10 @@ export default function AdminStatesPage() {
                   <tr key={s.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                     <td className="px-4 py-3 text-white/40">{i + 1}</td>
                     <td className="px-4 py-3 font-medium">{s.name}</td>
-                    <td className="px-4 py-3 text-white/60">{GROUPS[s.group_id] || s.group_id}</td>
+                    <td className="px-4 py-3 text-white/60">{groupMap[s.group_id] || s.group_id}</td>
                     <td className="px-4 py-3">
                       {(s.thumbnail || s.image) ? (
-                        <img src={(s.thumbnail || s.image)!} alt={s.name} className="w-8 h-8 rounded object-cover" />
+                        <img src={(s.thumbnail || s.image)!} alt={s.name} className="w-8 h-8 rounded object-cover" loading="lazy" decoding="async" />
                       ) : (
                         <span className="text-white/20">—</span>
                       )}
