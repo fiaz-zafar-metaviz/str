@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Logo    from '@/components/public/ui/Logo'
 import Button  from '@/components/public/ui/Button'
 import Sidebar from '@/components/public/layout/Sidebar'
+import { siteConfig } from '@/lib/site-config'
 
 export default function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -23,7 +24,7 @@ export default function Navbar() {
           className="text-white px-2.5 py-1.5 text-[10px] sm:text-sm font-semibold tracking-wide hover:opacity-90 transition-opacity leading-tight text-center"
           style={{ background: 'rgba(59,130,246,0.9)', border: '1px solid rgba(59,130,246,1)' } as React.CSSProperties}
         >
-          LIST YOUR STR<br className="sm:hidden" /> WEDDING PROPERTY
+          {siteConfig.ctaText}
         </Button>
 
         {/* Right — Burger */}

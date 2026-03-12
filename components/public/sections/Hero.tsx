@@ -1,6 +1,7 @@
 import SearchBar from '@/components/public/sections/SearchBar'
 import HeroVideo  from '@/components/public/sections/HeroVideo'
 import Navbar     from '@/components/public/layout/Navbar'
+import { siteConfig } from '@/lib/site-config'
 
 // Server component — only HeroVideo, SearchBar, Navbar are client
 export default function Hero() {
@@ -22,7 +23,7 @@ export default function Hero() {
           className="text-white text-center whitespace-nowrap text-[36px] sm:text-[50px] md:text-[65px]"
           style={{ fontFamily: "'Zen Old Mincho', serif", fontWeight: 800, letterSpacing: '-2px', lineHeight: '1.1em', marginBottom: '20px', textShadow: '1px 1px 3px rgba(0,0,0,.2),-2px 2px 6px rgba(0,0,0,.3)' }}
         >
-          STR WEDDING
+          {siteConfig.heroTitle}
         </h1>
 
         <div className="w-full max-w-5xl">
