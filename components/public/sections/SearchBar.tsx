@@ -123,7 +123,7 @@ export default function SearchBar() {
   return ( 
     <div ref={formRef} className="w-full">
       {!ready ? <SearchBarSkeleton /> : (
-        <form onSubmit={handleSubmit} className={`max-w-5xl mx-auto transition-all ${stickyClass}`} style={!sticky ? { background: 'rgba(0,0,0,0.2)', borderRadius: 10, padding: '20px 16px' } : {}}>
+        <form onSubmit={handleSubmit} className={`max-w-5xl mx-auto transition-all ${stickyClass}`} style={!sticky ? { background: 'rgba(0,0,0,0.2)', borderRadius: 10, padding: '20px 16px 28px' } : {}}>
 
           {/* Subtitle — hidden on mobile to save space */}
           <h2 className="hidden md:block text-white text-center mb-3 leading-snug drop-shadow text-[25px]" style={{ fontWeight: 600 }}>

@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'www.strwedding.com' },
       { protocol: 'https', hostname: 'upload.wikimedia.org' },
       { protocol: 'https', hostname: '*.r2.dev' },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
     ],
   },
 }

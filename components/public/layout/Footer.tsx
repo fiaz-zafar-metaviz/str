@@ -40,7 +40,7 @@ const popularLocations = [
 export default function Footer() {
   return (
     <footer className="bg-[#111] text-white border-t border-white/10">
-      <div className="mx-auto max-w-7xl px-4 py-12 md:py-16">
+      <div className="px-6 md:px-12 py-12 md:py-16">
         <div className="grid gap-10 md:grid-cols-[5fr_2fr_5fr] lg:gap-12">
           {/* About with Logo */}
           <div>
