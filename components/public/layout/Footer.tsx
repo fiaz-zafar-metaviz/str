@@ -50,7 +50,7 @@ export default function Footer() {
                 alt={siteConfig.name}
                 width={160}
                 height={160}
-                className="rounded-full object-cover w-24 h-24 md:w-36 md:h-36 lg:w-40 lg:h-40"
+                className="rounded-full object-cover"
               />
             </Link>
             <p className="text-sm leading-relaxed text-white/70">
