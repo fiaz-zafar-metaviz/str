@@ -3,7 +3,7 @@
 import { bucketUrl } from '@/lib/site-config'
 
 export default function HeroVideo() {
-  const src = bucketUrl ? `${bucketUrl}/public/featured-video.avi` : '/featured-video.avi'
+  const src = bucketUrl ? `${bucketUrl}/public/featured-video.mp4` : '/featured-video.mp4'
 
   return (
     <video
