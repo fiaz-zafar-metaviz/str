@@ -14,7 +14,7 @@ export default function AmenityCard({ name, image, href = '#', aspect = 'portrai
   return (
     <Link
       href={href}
-      className={`group relative block ${aspectClass} min-w-[260px] flex-shrink-0 overflow-hidden rounded-xl bg-tertiary md:min-w-[300px]`}
+      className={`group relative block ${aspectClass} min-w-[300px] flex-shrink-0 overflow-hidden rounded-xl bg-tertiary md:min-w-[350px]`}
     >
       <Image
         src={image}

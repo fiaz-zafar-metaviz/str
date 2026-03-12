@@ -3,54 +3,27 @@
 import { useRef } from 'react'
 import AmenityCard from '@/components/public/ui/AmenityCard'
 
-const IMG = 'https://www.strwedding.com/images'
+const R2 = 'https://pub-c0dd840195a94f918ddc5fb37336743d.r2.dev/images/amenities'
 
 const popularAmenities = [
-  { name: 'Amazing Views',    slug: 'amazing_views',    image: `${IMG}/amazing-views.jpg` },
-  { name: 'Arcade',           slug: 'arcade',           image: `${IMG}/arcade.jpg` },
-  { name: 'Basketball',       slug: 'basketball',       image: `${IMG}/basketball.jpg` },
-  { name: 'Beach',            slug: 'beach',            image: `${IMG}/beach.jpg` },
-  { name: 'Fishing',          slug: 'fishing',          image: `${IMG}/fishing.jpg` },
-  { name: 'Waterfront',       slug: 'waterfront',       image: `${IMG}/waterfront.jpg` },
-  { name: 'Bunk Room',        slug: 'bunk_room',        image: `${IMG}/bunk-room.jpg` },
-  { name: 'Game Room',        slug: 'game_room',        image: `${IMG}/game-room.jpg` },
-  { name: 'Garage',           slug: 'garage',           image: `${IMG}/garage.jpg` },
-  { name: 'Golf',             slug: 'golf',             image: `${IMG}/golf.jpg` },
-  { name: 'Hot Tub',          slug: 'hot_tub',          image: `${IMG}/hot-tub.jpg` },
-  { name: 'Outdoor Kitchen',  slug: 'outdoor_kitchen',  image: `${IMG}/outdoor-kitchen.jpg` },
-  { name: 'Outdoor Pool',     slug: 'outdoor_pool',     image: `${IMG}/outdoor-pool.jpg` },
-  { name: 'Pickleball',       slug: 'pickleball',       image: `${IMG}/pickleball.jpg` },
-  { name: 'Sports Court',     slug: 'sports_court',     image: `${IMG}/sports-court.jpg` },
-  { name: 'Volleyball',       slug: 'volleyball',       image: `${IMG}/volleyball.jpg` },
-  { name: 'Lake',             slug: 'lake',             image: `${IMG}/lake.jpg` },
-  { name: 'Dock',             slug: 'dock',             image: `${IMG}/dock.jpg` },
-  { name: 'EV Charger',       slug: 'ev_charger',       image: `${IMG}/ev-charger.jpg` },
-  { name: 'Fireplace',        slug: 'fireplace',        image: `${IMG}/fireplace.jpg` },
-  { name: 'Private Beach',    slug: 'private_beach',    image: `${IMG}/private-beach.jpg` },
-  { name: 'Theater Room',     slug: 'theater_room',     image: `${IMG}/theater-room.jpg` },
-  { name: 'Tennis',            slug: 'tennis',            image: `${IMG}/tennis.jpg` },
-  { name: 'Bowling',          slug: 'bowling',          image: `${IMG}/bowling.jpg` },
-  { name: 'Gym',              slug: 'gym',              image: `${IMG}/gym.jpg` },
-  { name: 'Hiking',           slug: 'hiking',           image: `${IMG}/hiking.jpg` },
-  { name: 'Indoor Pool',      slug: 'indoor_pool',      image: `${IMG}/indoor-pool.jpg` },
-  { name: 'Playground',       slug: 'playground',       image: `${IMG}/playground.jpg` },
-  { name: 'River',            slug: 'river',            image: `${IMG}/river.jpg` },
-  { name: 'Sauna',            slug: 'sauna',            image: `${IMG}/sauna.jpg` },
-  { name: 'Sports Field',     slug: 'sports_field',     image: `${IMG}/sports-field.jpg` },
-  { name: 'Waterfall',        slug: 'waterfall',        image: `${IMG}/waterfall.jpg` },
-  { name: 'Weddings',         slug: 'weddings',         image: `${IMG}/weddings.jpg` },
-  { name: 'Waterslide',       slug: 'waterslide',       image: `${IMG}/waterslide.jpg` },
-  { name: 'Event Space',      slug: 'event_space',      image: `${IMG}/event-space.jpg` },
-  { name: 'Pet Friendly',     slug: 'pet_friendly',     image: `${IMG}/pet-friendly.jpg` },
-  { name: 'All Inclusive',     slug: 'all_inclusive',     image: `${IMG}/all-inclusive.jpg` },
-  { name: 'Pool',             slug: 'pool',             image: `${IMG}/pool.jpg` },
+  { name: 'Beach',          slug: 'beach',          image: `${R2}/beach.avif` },
+  { name: 'Dock',           slug: 'dock',           image: `${R2}/dock.avif` },
+  { name: 'Indoor Pool',    slug: 'indoor_pool',    image: `${R2}/indoor-pool.avif` },
+  { name: 'Outdoor Pool',   slug: 'outdoor_pool',   image: `${R2}/outdoor-pool.avif` },
+  { name: 'Private Beach',  slug: 'private_beach',  image: `${R2}/private-beach.avif` },
+  { name: 'Sports Court',   slug: 'sports_court',   image: `${R2}/sports-court.avif` },
+  { name: 'Game Room',      slug: 'game_room',      image: `${R2}/game-room.avif` },
+  { name: 'Fishing',        slug: 'fishing',        image: `${R2}/fishing.avif` },
+  { name: 'Waterfront',     slug: 'waterfront',     image: `${R2}/waterfront.avif` },
+  { name: 'Weddings',       slug: 'weddings',       image: `${R2}/weddings.avif` },
+  { name: 'Golf',           slug: 'golf',           image: `${R2}/golf.avif` },
 ]
 
 export default function AmenitiesCarousel() {
   const scrollRef = useRef<HTMLDivElement>(null)
 
   const scroll = (dir: 'left' | 'right') => {
-    scrollRef.current?.scrollBy({ left: dir === 'left' ? -320 : 320, behavior: 'smooth' })
+    scrollRef.current?.scrollBy({ left: dir === 'left' ? -380 : 380, behavior: 'smooth' })
   }
 
   return (

@@ -45,7 +45,7 @@ export default function Sidebar({ open, onClose }: Props) {
         }}
       >
         {/* Close button */}
-        <div className="flex justify-end p-4">
+        <div className="flex justify-end px-4 pt-2 pb-1">
           <button
             type="button"
             onClick={onClose}

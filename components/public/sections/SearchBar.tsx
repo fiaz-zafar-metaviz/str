@@ -115,7 +115,7 @@ export default function SearchBar() {
   }
 
   const stickyClass = sticky
-    ? 'fixed top-0 left-0 right-0 z-50 shadow-xl px-4 py-2.5 bg-deep rounded-b-xl'
+    ? 'fixed top-0 left-0 right-0 z-50 shadow-[0_4px_20px_rgba(0,0,0,0.3)] px-4 py-2.5 bg-secondary rounded-b-xl'
     : 'p-0'
 
   const btnLabel = `Search Now${count !== null ? ` (${count})` : ''}`
@@ -123,7 +123,7 @@ export default function SearchBar() {
   return ( 
     <div ref={formRef} className="w-full">
       {!ready ? <SearchBarSkeleton /> : (
-        <form onSubmit={handleSubmit} className={`max-w-5xl mx-auto transition-all ${stickyClass}`} style={!sticky ? { background: 'rgba(0,0,0,0.2)', borderRadius: 10, padding: '20px 16px 28px' } : {}}>
+        <form onSubmit={handleSubmit} className={`max-w-6xl mx-auto transition-all ${stickyClass}`} style={!sticky ? { background: 'rgba(0,0,0,0.2)', borderRadius: 10, padding: '20px 16px 28px' } : {}}>
 
           {/* Subtitle — hidden when sticky and on mobile */}
           {!sticky && (
@@ -150,14 +150,14 @@ export default function SearchBar() {
             </button>
           </div>
 
-          {/* Mobile: 2×2 grid + full-width search button */}
-          <div className="md:hidden grid grid-cols-2 gap-1.5">
+          {/* Mobile: 2 rows — 4 fields + button */}
+          <div className="md:hidden grid grid-cols-4 gap-1" style={{ height: 36 }}>
             <Counter   label="Attendees" name="attendees" value={attendees} onChange={setAttendees} />
             <Counter   label="Sleeps"    name="sleeps"    value={sleeps}    onChange={setSleeps} />
             <Amenities selected={amenities} onChange={setAmenities} mobilePopup />
             <Location  selected={locations} onChange={setLocations} mobilePopup />
           </div>
-          <Button type="submit" className="mt-1.5 w-full flex md:hidden items-center justify-center gap-2 py-2.5 text-sm bg-black text-white border border-white hover:bg-zinc-900">
+          <Button type="submit" className="mt-1 w-full flex md:hidden items-center justify-center gap-2 py-2 text-xs bg-black text-white border border-white hover:bg-zinc-900">
             {btnLabel}
           </Button>
 

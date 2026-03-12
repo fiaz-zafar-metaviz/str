@@ -45,6 +45,7 @@ export default function WeddingInfo() {
             WebkitBackgroundClip: 'text',
             backgroundClip: 'text',
             color: 'transparent',
+            wordSpacing: '0.15em',
           }}
         >
           Short Term Rental Wedding Venues
@@ -151,7 +152,8 @@ export default function WeddingInfo() {
 
         <a
           href="/wedding-venues"
-          className="mt-4 inline-block rounded-lg bg-black px-8 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-[#222] hover:shadow-[0_4px_15px_rgba(0,0,0,0.2)]"
+          className="mt-4 inline-block rounded-lg bg-black px-8 py-3 font-semibold !text-white transition-all duration-300 hover:scale-105 hover:bg-[#222] hover:shadow-[0_4px_15px_rgba(0,0,0,0.2)]"
+          style={{ color: '#fff' }}
         >
           Explore Now
         </a>

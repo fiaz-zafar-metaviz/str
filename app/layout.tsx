@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { siteConfig, bucketUrl } from '@/lib/site-config'
 import Footer from '@/components/public/layout/Footer'
+import ScrollToTop from '@/components/public/ui/ScrollToTop'
 
 const logoUrl = bucketUrl ? `${bucketUrl}/public/logo/logo.avif` : '/logo.avif'
 
@@ -31,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}` }} />
       </head>
-      <body>{children}<Footer /></body>
+      <body>{children}<Footer /><ScrollToTop /></body>
     </html>
   )
 }

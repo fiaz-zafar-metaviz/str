@@ -43,17 +43,17 @@ export default function Footer() {
       <div className="px-6 md:px-12 py-12 md:py-16">
         <div className="grid gap-10 md:grid-cols-[5fr_2fr_5fr] lg:gap-12">
           {/* About with Logo */}
-          <div>
-            <Link href="/" className="inline-block mb-4">
+          <div className="text-center md:text-left">
+            <Link href="/" className="inline-block">
               <Image
                 src={logoSrc}
                 alt={siteConfig.name}
-                width={160}
-                height={160}
-                className="rounded-full object-cover"
+                width={120}
+                height={120}
+                className="rounded-full object-cover mx-auto md:mx-0 w-[100px] md:w-[120px]"
               />
             </Link>
-            <p className="text-sm leading-relaxed text-white/70">
+            <p className="mt-3 text-sm leading-relaxed text-white/70 text-center md:text-left">
               Explore vacation rentals by owners across the U.S., thoughtfully selected for comfort and convenience.
               From beach retreats and city escapes to mountain getaways, our listings offer ideal options for any trip.
               Enjoy accommodations designed to enhance your travel experience.
@@ -61,7 +61,7 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div>
+          <div className="text-center md:text-left">
             <h3 className="mb-4 text-base font-semibold text-white">Quick Links</h3>
             <ul className="space-y-2.5">
               {quickLinks.map(link => (
@@ -75,7 +75,7 @@ export default function Footer() {
           </div>
 
           {/* Popular Locations */}
-          <div>
+          <div className="text-center md:text-left">
             <h3 className="mb-4 text-base font-semibold text-white">Popular Wedding Venue Locations</h3>
             <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
               {popularLocations.map(loc => (

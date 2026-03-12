@@ -1,23 +1,23 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-const IMG = 'https://www.strwedding.com/images'
+const R2 = 'https://pub-c0dd840195a94f918ddc5fb37336743d.r2.dev/images/amenities'
 
 const combos = [
   {
-    image: `${IMG}/indoor-theater-game.png`,
+    image: `${R2}/indoor-theater-game.avif`,
     alt: 'indoor theater game',
     labels: ['Indoor Pool', 'Theater Room', 'Game Room'],
     href: '/wedding-venues?amenities[]=game_room&amenities[]=indoor_pool&amenities[]=theater_room',
   },
   {
-    image: `${IMG}/beach-dock-outdoor-pool.jpg`,
+    image: `${R2}/beach-dock-outdoor-pool.avif`,
     alt: 'beach dock outdoor pool',
     labels: ['Beach', 'Dock', 'Outdoor Pool'],
     href: '/wedding-venues?amenities[]=beach&amenities[]=dock&amenities[]=outdoor_pool',
   },
   {
-    image: `${IMG}/amazing-event-weddign.jpg`,
+    image: `${R2}/amazing-event-wedding.avif`,
     alt: 'amazing event wedding',
     labels: ['Amazing Views', 'Event Space', 'Weddings'],
     href: '/wedding-venues?amenities[]=amazing_views&amenities[]=weddings&amenities[]=event_space',
@@ -49,10 +49,12 @@ export default function AmenityCombinations() {
                   sizes="(max-width: 768px) 100vw, 33vw"
                   style={{ objectPosition: i === 0 ? 'top' : i === 1 ? 'center' : 'bottom' }}
                 />
-                {/* Full-width gradient overlay for text */}
-                <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
-                <div className="absolute inset-0 flex items-center px-4">
-                  <span className="text-base font-semibold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] md:text-lg">
+                {/* Full-width band with shadow for text - no background */}
+                <div className="absolute inset-0 flex items-center">
+                  <span
+                    className="block w-full px-4 py-2 text-left text-base font-semibold text-white md:text-lg"
+                    style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.5)' }}
+                  >
                     {label}
                   </span>
                 </div>
