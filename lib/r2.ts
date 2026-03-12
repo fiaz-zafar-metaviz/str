@@ -10,14 +10,18 @@ const r2 = new S3Client({
   },
 })
 
-const CONVERTIBLE = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/tiff', 'image/gif'])
+const CONVERTIBLE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/tiff', 'image/gif'])
+const CONVERTIBLE_EXTS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.tiff', '.gif'])
 
 export async function uploadToR2(file: Buffer, key: string, contentType: string) {
   let body = file
   let ct = contentType
   let finalKey = key
 
-  if (CONVERTIBLE.has(contentType)) {
+  const ext = key.match(/\.[^.]+$/)?.[0]?.toLowerCase() || ''
+  const shouldConvert = CONVERTIBLE_TYPES.has(contentType) || CONVERTIBLE_EXTS.has(ext)
+
+  if (shouldConvert) {
     body = await sharp(file).avif({ quality: 75 }).toBuffer()
     ct = 'image/avif'
     finalKey = key.replace(/\.[^.]+$/, '.avif')
