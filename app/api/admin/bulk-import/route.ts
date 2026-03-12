@@ -157,7 +157,7 @@ async function downloadImage(path: string): Promise<{ buffer: Buffer; contentTyp
   }
 }
 
-const BATCH_SIZE = 5
+const BATCH_SIZE = 2
 
 export async function POST(req: NextRequest) {
   const supabase = createAdminClient()
