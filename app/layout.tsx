@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { siteConfig, bucketUrl } from '@/lib/site-config'
 
-const faviconUrl = bucketUrl ? `${bucketUrl}/public/logo/favicon.avif` : '/favicon.avif'
+const faviconUrl = bucketUrl ? `${bucketUrl}/public/logo/favicon.ico` : '/favicon.ico'
 const logoUrl = bucketUrl ? `${bucketUrl}/public/logo/logo.avif` : '/logo.avif'
 
 export const metadata: Metadata = {
