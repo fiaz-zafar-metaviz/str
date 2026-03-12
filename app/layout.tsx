@@ -3,14 +3,13 @@ import './globals.css'
 import { siteConfig, bucketUrl } from '@/lib/site-config'
 import Footer from '@/components/public/layout/Footer'
 
-const faviconUrl = bucketUrl ? `${bucketUrl}/public/logo/favicon.ico` : '/favicon.ico'
 const logoUrl = bucketUrl ? `${bucketUrl}/public/logo/logo.avif` : '/logo.avif'
 
 export const metadata: Metadata = {
   title: siteConfig.name,
   description: siteConfig.description,
   icons: {
-    icon: faviconUrl,
+    icon: logoUrl,
     apple: logoUrl,
   },
   openGraph: {

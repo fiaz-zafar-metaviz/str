@@ -1,20 +1,22 @@
 import AmenityCard from '@/components/public/ui/AmenityCard'
 
+const IMG = 'https://www.strwedding.com/images'
+
 const columns = [
   [
-    { name: 'Indoor Pool', image: 'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=600&h=400&fit=crop' },
-    { name: 'Theater Room', image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&h=400&fit=crop' },
-    { name: 'Game Room', image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&h=400&fit=crop' },
+    { name: 'Indoor Pool',   slug: 'indoor_pool',   image: `${IMG}/indoor-pool.jpg` },
+    { name: 'Theater Room',  slug: 'theater_room',  image: `${IMG}/theater-room.jpg` },
+    { name: 'Game Room',     slug: 'game_room',     image: `${IMG}/game-room.jpg` },
   ],
   [
-    { name: 'Beach', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop' },
-    { name: 'Dock', image: 'https://images.unsplash.com/photo-1545579133-99bb5ab189bd?w=600&h=400&fit=crop' },
-    { name: 'Outdoor Pool', image: 'https://images.unsplash.com/photo-1572331165267-854da2b10ccc?w=600&h=400&fit=crop' },
+    { name: 'Beach',         slug: 'beach',         image: `${IMG}/beach.jpg` },
+    { name: 'Dock',          slug: 'dock',          image: `${IMG}/dock.jpg` },
+    { name: 'Outdoor Pool',  slug: 'outdoor_pool',  image: `${IMG}/outdoor-pool.jpg` },
   ],
   [
-    { name: 'Amazing Views', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop' },
-    { name: 'Event Space', image: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=600&h=400&fit=crop' },
-    { name: 'Weddings', image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop' },
+    { name: 'Amazing Views', slug: 'amazing_views', image: `${IMG}/amazing-views.jpg` },
+    { name: 'Event Space',   slug: 'event_space',   image: `${IMG}/event-space.jpg` },
+    { name: 'Weddings',      slug: 'weddings',      image: `${IMG}/weddings.jpg` },
   ],
 ]
 
@@ -29,7 +31,13 @@ export default function AmenityCombinations() {
         {columns.map((col, i) => (
           <div key={i} className="flex flex-col gap-4">
             {col.map(item => (
-              <AmenityCard key={item.name} name={item.name} image={item.image} aspect="video" />
+              <AmenityCard
+                key={item.name}
+                name={item.name}
+                image={item.image}
+                href={`/wedding-venues?${col.map(c => `amenities[]=${c.slug}`).join('&')}`}
+                aspect="video"
+              />
             ))}
           </div>
         ))}

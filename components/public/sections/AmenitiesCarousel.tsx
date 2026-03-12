@@ -3,18 +3,20 @@
 import { useRef } from 'react'
 import AmenityCard from '@/components/public/ui/AmenityCard'
 
+const IMG = 'https://www.strwedding.com/images'
+
 const popularAmenities = [
-  { name: 'Beach', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=750&fit=crop' },
-  { name: 'Dock', image: 'https://images.unsplash.com/photo-1545579133-99bb5ab189bd?w=600&h=750&fit=crop' },
-  { name: 'Indoor Pool', image: 'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=600&h=750&fit=crop' },
-  { name: 'Outdoor Pool', image: 'https://images.unsplash.com/photo-1572331165267-854da2b10ccc?w=600&h=750&fit=crop' },
-  { name: 'Private Beach', image: 'https://images.unsplash.com/photo-1520942702018-0862200e6873?w=600&h=750&fit=crop' },
-  { name: 'Sports Court', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=750&fit=crop' },
-  { name: 'Game Room', image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&h=750&fit=crop' },
-  { name: 'Fishing', image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=750&fit=crop' },
-  { name: 'Waterfront', image: 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=600&h=750&fit=crop' },
-  { name: 'Weddings', image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=750&fit=crop' },
-  { name: 'Golf', image: 'https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=600&h=750&fit=crop' },
+  { name: 'Beach',         slug: 'beach',         image: `${IMG}/beach.jpg` },
+  { name: 'Dock',          slug: 'dock',          image: `${IMG}/dock.jpg` },
+  { name: 'Indoor Pool',   slug: 'indoor_pool',   image: `${IMG}/indoor-pool.jpg` },
+  { name: 'Outdoor Pool',  slug: 'outdoor_pool',  image: `${IMG}/outdoor-pool.jpg` },
+  { name: 'Private Beach', slug: 'private_beach', image: `${IMG}/private-beach.jpg` },
+  { name: 'Sports Court',  slug: 'sports_court',  image: `${IMG}/sports-court.jpg` },
+  { name: 'Game Room',     slug: 'game_room',     image: `${IMG}/game-room.jpg` },
+  { name: 'Fishing',       slug: 'fishing',       image: `${IMG}/fishing.jpg` },
+  { name: 'Waterfront',    slug: 'waterfront',    image: `${IMG}/waterfront.jpg` },
+  { name: 'Weddings',      slug: 'weddings',      image: `${IMG}/weddings.jpg` },
+  { name: 'Golf',          slug: 'golf',          image: `${IMG}/golf.jpg` },
 ]
 
 export default function AmenitiesCarousel() {
@@ -49,7 +51,7 @@ export default function AmenitiesCarousel() {
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {popularAmenities.map(a => (
-            <AmenityCard key={a.name} name={a.name} image={a.image} />
+            <AmenityCard key={a.name} name={a.name} image={a.image} href={`/wedding-venues?amenities[]=${a.slug}`} />
           ))}
         </div>
 
