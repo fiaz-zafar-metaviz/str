@@ -54,7 +54,7 @@ export default function AmenitiesCarousel() {
   }
 
   return (
-    <section className="py-12 md:py-16 w-full">
+    <section className="py-12 md:py-16 w-full px-4 md:px-8">
       <h2 className="mb-8 text-center text-2xl font-semibold text-primary md:text-3xl lg:text-4xl">
         Popular Amenities
       </h2>

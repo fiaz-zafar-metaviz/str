@@ -8,10 +8,10 @@ export default function HomePage() {
   return (
     <main className="bg-primary min-h-screen">
       <Hero />
+      <DestinationCollections />
       <AmenitiesCarousel />
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <AmenityCombinations />
-        <DestinationCollections />
       </div>
       <WeddingInfo />
     </main>
