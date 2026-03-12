@@ -1,6 +1,6 @@
 import { createAdminClient } from '@/lib/supabase-server'
 import { uploadToR2 } from '@/lib/r2'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 const OLD_DOMAIN = 'https://strwedding.com'
 
@@ -157,90 +157,96 @@ async function downloadImage(path: string): Promise<{ buffer: Buffer; contentTyp
   }
 }
 
-export async function POST() {
+const BATCH_SIZE = 10
+
+export async function POST(req: NextRequest) {
   const supabase = createAdminClient()
-  const results = { groups: 0, states: 0, images: 0, errors: [] as string[] }
+  const { searchParams } = new URL(req.url)
+  const step = searchParams.get('step') || 'clear'
+  const offset = parseInt(searchParams.get('offset') || '0')
+  const results = { step, offset, done: 0, images: 0, errors: [] as string[], next: '' }
 
-  // Step 1: Clear existing data
-  await supabase.from('states').delete().neq('id', '00000000-0000-0000-0000-000000000000')
-  await supabase.from('location_groups').delete().neq('id', 0)
-
-  // Step 2: Insert groups with images
-  for (const g of GROUPS) {
-    let imageUrl: string | null = null
-    let faqImageUrl: string | null = null
-
-    if (g.image) {
-      const img = await downloadImage(g.image)
-      if (img) {
-        const key = `images/groups/${g.slug}.jpg`
-        imageUrl = await uploadToR2(img.buffer, key, img.contentType)
-        results.images++
-      } else {
-        results.errors.push(`Group image failed: ${g.name}`)
-      }
-    }
-
-    if (g.faq_image) {
-      const img = await downloadImage(g.faq_image)
-      if (img) {
-        const key = `images/groups/${g.slug}-faq.jpg`
-        faqImageUrl = await uploadToR2(img.buffer, key, img.contentType)
-        results.images++
-      }
-    }
-
-    const { error } = await supabase.from('location_groups').insert({
-      id: g.id,
-      name: g.name,
-      slug: g.slug,
-      page_link: g.page_link,
-      page_title: g.page_title,
-      page_description: g.page_description || null,
-      image: imageUrl,
-      faq_image: faqImageUrl,
-      status: true,
-      order: g.order,
-    })
-
-    if (error) results.errors.push(`Group insert error: ${g.name} - ${error.message}`)
-    else results.groups++
+  if (step === 'clear') {
+    await supabase.from('states').delete().neq('id', '00000000-0000-0000-0000-000000000000')
+    await supabase.from('location_groups').delete().neq('id', 0)
+    results.next = '?step=groups'
+    return NextResponse.json(results)
   }
 
-  // Step 3: Insert states with images
-  for (const s of STATES) {
-    const groupId = STATE_GROUP_MAP[s.old_id]
-    if (!groupId) {
-      results.errors.push(`No group mapping for state: ${s.name} (old_id: ${s.old_id})`)
-      continue
-    }
+  if (step === 'groups') {
+    for (const g of GROUPS) {
+      let imageUrl: string | null = null
+      let faqImageUrl: string | null = null
 
-    let imageUrl: string | null = null
-
-    if (s.image) {
-      const img = await downloadImage(s.image)
-      if (img) {
-        const key = `images/states/${s.slug}.jpg`
-        imageUrl = await uploadToR2(img.buffer, key, img.contentType)
-        results.images++
-      } else {
-        results.errors.push(`State image failed: ${s.name}`)
+      if (g.image) {
+        const img = await downloadImage(g.image)
+        if (img) {
+          const key = `images/groups/${g.slug}.jpg`
+          imageUrl = await uploadToR2(img.buffer, key, img.contentType)
+          results.images++
+        } else {
+          results.errors.push(`Group image failed: ${g.name}`)
+        }
       }
+
+      if (g.faq_image) {
+        const img = await downloadImage(g.faq_image)
+        if (img) {
+          const key = `images/groups/${g.slug}-faq.jpg`
+          faqImageUrl = await uploadToR2(img.buffer, key, img.contentType)
+          results.images++
+        }
+      }
+
+      const { error } = await supabase.from('location_groups').insert({
+        id: g.id, name: g.name, slug: g.slug, page_link: g.page_link,
+        page_title: g.page_title, page_description: g.page_description || null,
+        image: imageUrl, faq_image: faqImageUrl, status: true, order: g.order,
+      })
+
+      if (error) results.errors.push(`Group: ${g.name} - ${error.message}`)
+      else results.done++
     }
-
-    const { error } = await supabase.from('states').insert({
-      name: s.name,
-      slug: s.slug,
-      group_id: groupId,
-      image: imageUrl,
-      thumbnail: imageUrl,
-      featured: s.featured,
-      order: s.order,
-    })
-
-    if (error) results.errors.push(`State insert error: ${s.name} - ${error.message}`)
-    else results.states++
+    results.next = '?step=states&offset=0'
+    return NextResponse.json(results)
   }
 
-  return NextResponse.json(results)
+  if (step === 'states') {
+    const batch = STATES.slice(offset, offset + BATCH_SIZE)
+    if (batch.length === 0) {
+      return NextResponse.json({ step: 'done', message: 'All states imported!' })
+    }
+
+    for (const s of batch) {
+      const groupId = STATE_GROUP_MAP[s.old_id]
+      if (!groupId) { results.errors.push(`No group: ${s.name}`); continue }
+
+      let imageUrl: string | null = null
+      if (s.image) {
+        const img = await downloadImage(s.image)
+        if (img) {
+          const key = `images/states/${s.slug}.jpg`
+          imageUrl = await uploadToR2(img.buffer, key, img.contentType)
+          results.images++
+        } else {
+          results.errors.push(`Image failed: ${s.name}`)
+        }
+      }
+
+      const { error } = await supabase.from('states').insert({
+        name: s.name, slug: s.slug, group_id: groupId,
+        image: imageUrl, thumbnail: imageUrl, featured: s.featured, order: s.order,
+      })
+
+      if (error) results.errors.push(`State: ${s.name} - ${error.message}`)
+      else results.done++
+    }
+
+    const nextOffset = offset + BATCH_SIZE
+    results.next = nextOffset < STATES.length ? `?step=states&offset=${nextOffset}` : ''
+    if (!results.next) results.step = 'done'
+    return NextResponse.json(results)
+  }
+
+  return NextResponse.json({ error: 'Invalid step' }, { status: 400 })
 }
