@@ -26,7 +26,7 @@ export default function Hero() {
           {siteConfig.heroTitle}
         </h1>
 
-        <div className="w-full max-w-5xl">
+        <div className="w-full max-w-5xl pb-6">
           <SearchBar />
         </div>
       </div>
