@@ -115,7 +115,7 @@ export default function SearchBar() {
   }
 
   const stickyClass = sticky
-    ? 'fixed top-0 left-0 right-0 z-50 shadow-xl px-4 py-2.5 bg-deep'
+    ? 'fixed top-0 left-0 right-0 z-50 shadow-xl px-4 py-2.5 bg-deep rounded-b-xl'
     : 'p-0'
 
   const btnLabel = `Search Now${count !== null ? ` (${count})` : ''}`
