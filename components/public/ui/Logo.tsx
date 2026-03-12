@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function Logo({ size = 52, href = '/' }: Props) {
-  const src = bucketUrl ? `${bucketUrl}/logo.webp` : '/logo.webp'
+  const src = bucketUrl ? `${bucketUrl}/public/logo/logo.avif` : '/logo.avif'
 
   return (
     <Link href={href} className="flex-shrink-0" aria-label={`${siteConfig.name} home`}>

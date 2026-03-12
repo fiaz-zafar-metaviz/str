@@ -4,6 +4,7 @@ export type SiteConfig = {
   domain: string
   heroTitle: string
   ctaText: string
+  showCta: boolean
   description: string
 }
 
@@ -14,6 +15,7 @@ const SITES: Record<string, SiteConfig> = {
     domain: 'strwedding.com',
     heroTitle: 'STR WEDDING',
     ctaText: 'LIST YOUR STR WEDDING PROPERTY',
+    showCta: true,
     description: 'Short Term Rental Wedding Platform',
   },
   top10str: {
@@ -22,6 +24,7 @@ const SITES: Record<string, SiteConfig> = {
     domain: 'top10str.com',
     heroTitle: 'TOP 10 STR',
     ctaText: 'LIST YOUR STR PROPERTY',
+    showCta: false,
     description: 'Top 10 Short Term Rentals',
   },
 }

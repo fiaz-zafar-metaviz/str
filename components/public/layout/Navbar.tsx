@@ -19,13 +19,15 @@ export default function Navbar() {
         </div>
 
         {/* Center — CTA */}
-        <Button
-          type="button"
-          className="text-white px-2.5 py-1.5 text-[10px] sm:text-sm font-semibold tracking-wide hover:opacity-90 transition-opacity leading-tight text-center"
-          style={{ background: 'rgba(59,130,246,0.9)', border: '1px solid rgba(59,130,246,1)' } as React.CSSProperties}
-        >
-          {siteConfig.ctaText}
-        </Button>
+        {siteConfig.showCta && (
+          <Button
+            type="button"
+            className="text-white px-2.5 py-1.5 text-[10px] sm:text-sm font-semibold tracking-wide hover:opacity-90 transition-opacity leading-tight text-center"
+            style={{ background: 'rgba(59,130,246,0.9)', border: '1px solid rgba(59,130,246,1)' } as React.CSSProperties}
+          >
+            {siteConfig.ctaText}
+          </Button>
+        )}
 
         {/* Right — Burger */}
         <button
